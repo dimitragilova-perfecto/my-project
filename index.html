@@ -2,11 +2,10 @@
 <html lang="bg">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#141821">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131a">
   <meta name="description" content="Booking системи, онлайн магазини, landing pages и персонализирани уеб приложения.">
-  <title>XXX — уеб решения за вашия бизнес</title>
-
+  <title>Nexora — уеб решения</title>
   <style>
     :root {
       color-scheme: dark;
@@ -21,982 +20,493 @@
       --attribute: #d7b2f3;
       --string: #eac395;
       --accent: #c4eea9;
+      --gutter: 34px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
-      min-height: 100vh;
+      height: 100vh;
+      height: 100dvh;
+      min-height: 420px;
       margin: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
       background: var(--background);
       color: var(--text);
-      font: 15px/1.7 Consolas, "Cascadia Code", "Liberation Mono", monospace;
+      font: 14px/1.55 Consolas, "Cascadia Code", "Liberation Mono", monospace;
     }
-
-    a {
-      color: inherit;
-      text-underline-offset: 6px;
+    body.light-theme {
+      color-scheme: light;
+      --background: #eef2f7;
+      --editor: #fff;
+      --chrome: #e3eaf3;
+      --border: #c2ccda;
+      --text: #202b3b;
+      --muted: #526178;
+      --comment: #426e4b;
+      --tag: #005da8;
+      --attribute: #773c98;
+      --string: #925018;
+      --accent: #286c48;
     }
-
-    a:focus-visible,
-    button:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 4px;
-    }
-
-    ::selection {
-      color: #fff;
-      background: #425675;
-    }
+    a { color: inherit; text-underline-offset: 4px; }
+    button { font: inherit; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    ::selection { color: #fff; background: #425675; }
 
     .skip-link {
-      position: absolute;
-      z-index: 3;
-      top: 10px;
-      left: 16px;
-      padding: 8px 14px;
-      transform: translateY(-160%);
-      background: var(--accent);
-      color: var(--background);
+      position: absolute; z-index: 5; top: 8px; left: 12px;
+      padding: 8px 12px; transform: translateY(-160%);
+      background: var(--accent); color: var(--background);
     }
-
-    .skip-link:focus {
-      transform: translateY(0);
-    }
-
+    .skip-link:focus { transform: translateY(0); }
     .topbar {
-      max-width: 1440px;
-      margin: auto;
-      padding: 28px 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+      flex: 0 0 auto; min-height: 62px; width: min(1440px, 100%);
+      margin: 0 auto; padding: 10px 28px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
-
-    .brand {
-      font-size: 19px;
-      font-weight: 700;
-      text-decoration: none;
-      letter-spacing: -0.5px;
+    .brand { font-size: 18px; font-weight: 700; text-decoration: none; }
+    .brand-mark { margin-right: 9px; color: var(--accent); }
+    .brand-extension { color: var(--muted); font-weight: 400; }
+    .top-actions { display: flex; align-items: center; gap: 18px; }
+    .header-contact { font-size: 12px; text-decoration: none; }
+    .header-contact span { margin-left: 6px; color: var(--accent); }
+    .header-contact:hover, .footer-links a:hover { color: var(--accent); }
+    .theme-toggle {
+      padding: 7px 10px; border: 1px solid var(--border); border-radius: 4px;
+      background: var(--chrome); color: var(--text); font-size: 11px; cursor: pointer;
     }
-
-    .brand-mark {
-      margin-right: 10px;
-      color: var(--accent);
-    }
-
-    .brand-extension {
-      color: var(--muted);
-      font-weight: 400;
-    }
-
-    .header-contact {
-      font-size: 13px;
-      text-decoration: none;
-    }
-
-    .header-contact span {
-      margin-left: 9px;
-      color: var(--accent);
-    }
-
-    .header-contact:hover {
-      color: var(--accent);
-      text-decoration: underline;
-    }
+    .theme-toggle:hover { border-color: var(--accent); }
 
     .editor {
-      width: min(1320px, calc(100% - 96px));
-      margin: 0 auto 34px;
-      border: 1px solid var(--border);
-      background: var(--editor);
-      box-shadow: 0 24px 80px #0005;
+      width: min(1320px, calc(100% - 48px)); flex: 1 1 auto; min-height: 0;
+      margin: 0 auto 8px; display: flex; flex-direction: column;
+      border: 1px solid var(--border); background: var(--editor);
+      box-shadow: 0 18px 55px #0004;
     }
-
     .editor-chrome {
-      height: 54px;
-      display: flex;
-      align-items: stretch;
-      border-bottom: 1px solid var(--border);
-      background: var(--chrome);
+      flex: 0 0 42px; display: flex; align-items: stretch;
+      border-bottom: 1px solid var(--border); background: var(--chrome);
     }
-
-    .window-dots {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 0 24px;
-    }
-
-    .window-dots span {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #677183;
-    }
-
-    .window-dots span:first-child { background: #e88380; }
-    .window-dots span:nth-child(2) { background: #e8c175; }
-    .window-dots span:last-child { background: #8acb94; }
-
+    .window-dots { display: flex; align-items: center; gap: 6px; padding: 0 16px; }
+    .window-dots i { width: 8px; height: 8px; border-radius: 50%; background: #e88380; }
+    .window-dots i:nth-child(2) { background: #e8c175; }
+    .window-dots i:nth-child(3) { background: #8acb94; }
     .file-tab {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0 24px;
-      border-top: 2px solid var(--accent);
-      border-right: 1px solid var(--border);
-      background: var(--editor);
-      font-size: 13px;
+      display: flex; align-items: center; gap: 9px; padding: 0 18px;
+      border-top: 2px solid var(--accent); border-right: 1px solid var(--border);
+      background: var(--editor); font-size: 12px;
     }
+    .file-tab span { color: var(--string); font-weight: 700; }
+    .editor-label { align-self: center; margin-left: auto; padding: 0 18px; color: var(--muted); font-size: 10px; }
+    .breadcrumbs { flex: 0 0 auto; padding: 7px 24px; color: var(--muted); font-size: 11px; }
+    .breadcrumbs span { margin: 0 7px; }
+    .breadcrumbs .crumb-active { color: var(--text); }
 
-    .file-tab span {
-      color: var(--string);
-      font-weight: 700;
-    }
-
-    .editor-label {
-      align-self: center;
-      margin-left: auto;
-      padding: 0 24px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .breadcrumbs {
-      padding: 15px 32px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .breadcrumbs span {
-      margin: 0 8px;
-    }
-
-    .breadcrumbs .crumb-active {
-      color: var(--text);
-    }
-
-    .slide-viewport {
-      overflow: hidden;
-    }
-
+    .slide-viewport { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+    .slides { display: flex; width: 100%; height: 100%; transition: transform 380ms ease; }
     .slide {
-      min-width: 0;
-      padding: 36px 64px 56px 86px;
+      flex: 0 0 100%; width: 100%; height: 100%; min-width: 0;
+      overflow-y: auto; overscroll-behavior: contain;
+      padding: clamp(14px, 3vh, 30px) clamp(22px, 5vw, 68px) 20px var(--gutter);
       counter-reset: line;
     }
-
-    .slide + .slide {
-      border-top: 1px solid var(--border);
-    }
-
-    .js-ready .slides {
-      display: flex;
-      transition: transform 400ms ease;
-    }
-
-    .js-ready .slide {
-      flex: 0 0 100%;
-      width: 100%;
-      border: 0;
-    }
-
     .code-line {
-      position: relative;
-      min-height: 29px;
-      margin: 0;
-      counter-increment: line;
-      overflow-wrap: anywhere;
+      position: relative; min-height: 23px; margin: 0;
+      counter-increment: line; overflow-wrap: anywhere;
     }
-
     .code-line::before {
-      content: counter(line) / "";
-      position: absolute;
-      right: calc(100% + 28px);
-      top: 0;
-      width: 28px;
-      color: #8995a8;
-      font-size: 12px;
-      font-weight: 400;
-      line-height: 29px;
-      text-align: right;
-      user-select: none;
+      content: counter(line) / ""; position: absolute; top: 0;
+      right: calc(100% + 12px); width: 22px; color: #8995a8;
+      font-size: 10px; line-height: 23px; text-align: right; user-select: none;
     }
-
-    .indent { margin-left: 24px; }
-    .indent-two { margin-left: 48px; }
-    .indent-three { margin-left: 72px; }
-
-    .slide .indent::before { right: calc(100% + 52px); }
-    .slide .indent-two::before { right: calc(100% + 76px); }
-    .slide .indent-three::before { right: calc(100% + 100px); }
-
+    .indent { margin-left: 18px; }
+    .indent-two { margin-left: 36px; }
+    .indent-three { margin-left: 54px; }
+    .slide .indent::before { right: calc(100% + 30px); }
+    .slide .indent-two::before { right: calc(100% + 48px); }
+    .slide .indent-three::before { right: calc(100% + 66px); }
     .tag { color: var(--tag); }
     .attribute { color: var(--attribute); }
     .string { color: var(--string); }
     .comment { color: var(--comment); }
     .accent { color: var(--accent); }
-
-    h1,
-    h2 {
-      max-width: 920px;
-      padding: 14px 0;
-      font-size: clamp(30px, 4vw, 52px);
-      font-weight: 500;
-      line-height: 1.24;
-      letter-spacing: -2px;
-    }
-
-    h1 em {
-      color: var(--accent);
-      font-style: normal;
-    }
-
-    .intro,
-    .description {
-      max-width: 760px;
-      padding: 18px 0 22px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.8;
-    }
-
-    .features {
-      margin-top: 5px;
-      margin-bottom: 5px;
-      padding: 0;
-      list-style: none;
-    }
-
-    .features li {
-      padding: 3px 0;
-    }
-
-    .features li::after {
-      content: " </li>" / "";
-      color: var(--tag);
-    }
-
-    .contact-kicker {
-      padding-top: 18px;
-      color: var(--accent);
-    }
-
-    .contact-title {
-      font-size: clamp(36px, 5vw, 62px);
-    }
-
-    .contact-link {
-      display: inline-block;
-      padding: 12px 0;
-      color: var(--accent);
-      font-size: clamp(16px, 2vw, 21px);
-    }
-
-    .contact-link:hover {
-      color: #fff;
-    }
+    h1, h2 { max-width: 900px; margin: 0; padding: 8px 0; font-weight: 500; line-height: 1.2; letter-spacing: -1px; }
+    h1 { font-size: clamp(27px, 4.5vw, 52px); }
+    h2 { font-size: clamp(24px, 3.5vw, 40px); }
+    h1 em { color: var(--accent); font-style: normal; }
+    .intro, .description { max-width: 760px; padding: 8px 0; color: var(--muted); line-height: 1.6; }
+    .features { margin: 4px 0; padding: 0; list-style: none; }
+    .features li { padding: 2px 0; }
+    .features li::after { content: " </li>" / ""; color: var(--tag); }
+    .preview-link { color: inherit; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 6px; }
+    .preview-link:hover, .preview-link:focus-visible { color: var(--accent); text-decoration-color: var(--accent); }
+    .contact-kicker { padding-top: 10px; color: var(--accent); }
+    .contact-link { display: inline-block; padding: 8px 0; color: var(--accent); font-size: clamp(15px, 2vw, 20px); }
 
     .slide-controls {
-      min-height: 88px;
-      padding: 18px 32px;
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      border-top: 1px solid var(--border);
-      background: #1b2029;
+      flex: 0 0 54px; display: flex; align-items: center; gap: 18px;
+      padding: 6px 20px; border-top: 1px solid var(--border); background: var(--chrome);
     }
-
-    .slide-controls[hidden] {
-      display: none;
-    }
-
-    .slide-progress {
-      white-space: nowrap;
-      font-size: 13px;
-    }
-
-    .progress-label {
-      margin-right: 12px;
-      color: var(--muted);
-      font-size: 10px;
-      letter-spacing: 1px;
-    }
-
-    .keyboard-hint {
-      margin: 0;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .arrows {
-      display: flex;
-      gap: 9px;
-      margin-left: auto;
-    }
-
+    .slide-controls[hidden] { display: none; }
+    .slide-progress { white-space: nowrap; font-size: 11px; }
+    .progress-label { margin-right: 8px; color: var(--muted); font-size: 9px; letter-spacing: 1px; }
+    .keyboard-hint { margin: 0; color: var(--muted); font-size: 10px; }
+    .arrows { display: flex; align-items: center; gap: 8px; margin-left: auto; }
     .arrow {
-      width: 52px;
-      height: 48px;
-      border: 1px solid #6f7a8a;
-      background: transparent;
-      color: var(--text);
-      font: inherit;
-      font-size: 23px;
-      cursor: pointer;
+      width: 38px; height: 36px; border: 1px solid #718094;
+      background: transparent; color: var(--text); font-size: 21px; cursor: pointer;
     }
-
-    .arrow:hover:not([aria-disabled="true"]) {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .arrow[aria-disabled="true"] {
-      opacity: 0.45;
-      cursor: default;
-    }
-
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
+    .arrow:hover:not([aria-disabled="true"]) { border-color: var(--accent); color: var(--accent); }
+    .arrow[aria-disabled="true"] { opacity: .4; cursor: default; }
     .statusbar {
-      max-width: 1440px;
-      margin: auto;
-      padding: 0 48px 24px;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      color: var(--muted);
-      font-size: 11px;
+      flex: 0 0 auto; width: min(1320px, calc(100% - 48px)); min-height: 38px;
+      margin: 0 auto; padding: 4px 4px 10px; display: flex;
+      align-items: center; justify-content: space-between; gap: 16px;
+      color: var(--muted); font-size: 10px;
     }
+    .status-dot { display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: var(--accent); }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+    .footer-links a { text-decoration: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-    .status-dot {
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      margin-right: 8px;
-      border-radius: 50%;
-      background: var(--accent);
+    .preview-dialog {
+      width: min(760px, calc(100vw - 32px)); max-width: 760px; max-height: 84vh;
+      overflow: auto; margin: auto; padding: 16px;
+      border: 1px solid var(--accent); border-radius: 7px;
+      background: var(--editor); color: var(--text); box-shadow: 0 24px 80px #0009;
     }
+    .preview-dialog::backdrop { background: #000b; backdrop-filter: blur(3px); }
+    .preview-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .preview-title { margin: 0; font-size: 16px; font-weight: 600; }
+    .preview-dialog figure { margin: 0; }
+    .preview-dialog img { display: block; width: 100%; max-height: 58vh; object-fit: contain; background: var(--background); }
+    .preview-dialog figcaption { padding-top: 8px; color: var(--muted); font-size: 11px; }
+    .preview-navigation { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 12px; }
+    .preview-button, .preview-demo {
+      padding: 7px 10px; border: 1px solid var(--border); border-radius: 4px;
+      background: var(--chrome); color: var(--text); font: inherit; font-size: 11px;
+      text-decoration: none; cursor: pointer;
+    }
+    .preview-button:hover:not(:disabled), .preview-demo:hover { border-color: var(--accent); color: var(--accent); }
+    .preview-button:disabled { opacity: .45; cursor: default; }
+    .preview-count { color: var(--muted); font-size: 11px; }
+    .preview-demo { display: inline-block; margin-top: 12px; }
+    .preview-demo[hidden] { display: none; }
 
-    @media (max-width: 700px) {
-      body { font-size: 13px; }
-      .topbar { padding: 22px 18px; }
-      .brand { font-size: 17px; }
-      .header-contact { font-size: 12px; }
-      .editor { width: calc(100% - 24px); margin-bottom: 24px; }
+    @media (max-width: 650px) {
+      .topbar { min-height: 56px; padding: 8px 14px; }
+      .brand { font-size: 16px; }
+      .top-actions { gap: 10px; }
+      .header-contact { font-size: 11px; }
+      .theme-toggle { padding: 6px 7px; font-size: 10px; }
+      .editor { width: calc(100% - 16px); }
       .editor-label { display: none; }
-      .window-dots { padding: 0 14px; }
-      .file-tab { padding: 0 16px; }
-      .breadcrumbs { padding: 12px 16px; }
-      .slide { padding: 24px 18px 36px 43px; }
-
-      .code-line::before {
-        right: calc(100% + 12px);
-        width: 20px;
-        font-size: 10px;
-      }
-
+      .window-dots { padding: 0 10px; }
+      .file-tab { padding: 0 12px; }
+      .breadcrumbs { padding: 6px 12px; }
+      .slide { padding: 14px 14px 14px 34px; }
+      .code-line::before { right: calc(100% + 8px); width: 18px; font-size: 9px; }
       .indent { margin-left: 10px; }
       .indent-two { margin-left: 20px; }
       .indent-three { margin-left: 30px; }
-
-      .slide .indent::before { right: calc(100% + 22px); }
-      .slide .indent-two::before { right: calc(100% + 32px); }
-      .slide .indent-three::before { right: calc(100% + 42px); }
-
-      h1,
-      h2 {
-        font-size: clamp(27px, 7vw, 40px);
-        letter-spacing: -1px;
-      }
-
-      .intro,
-      .description {
-        font-size: 14px;
-      }
-
-      .slide-controls { padding: 14px 16px; gap: 10px; }
+      .slide .indent::before { right: calc(100% + 18px); }
+      .slide .indent-two::before { right: calc(100% + 28px); }
+      .slide .indent-three::before { right: calc(100% + 38px); }
       .keyboard-hint { display: none; }
-      .arrow { width: 46px; height: 44px; }
-      .statusbar { padding: 0 18px 20px; }
+      .slide-controls { padding-inline: 10px; }
+      .statusbar { width: calc(100% - 24px); font-size: 9px; }
+      .footer-links { gap: 8px 12px; }
     }
-
-    @media (max-width: 360px) {
-      .brand-extension { display: none; }
-      .slide { padding-right: 12px; }
-      .features li { font-size: 12px; }
+    @media (max-height: 560px) {
+      .topbar { min-height: 46px; padding-block: 4px; }
+      .editor-chrome { flex-basis: 34px; }
+      .breadcrumbs { padding-block: 3px; }
+      .slide { padding-top: 8px; padding-bottom: 8px; }
+      .slide-controls { flex-basis: 44px; }
+      .statusbar { min-height: 28px; padding-bottom: 5px; }
     }
-
     @media (prefers-reduced-motion: reduce) {
-      .js-ready .slides {
-        transition: none;
-      }
+      .slides { transition: none; }
     }
-  /* Оформление по височината на екрана */
-body.js-ready {
-  height: 100vh;
-  height: 100dvh;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.js-ready .topbar {
-  flex-shrink: 0;
-  width: 100%;
-  padding-top: 12px;
-  padding-bottom: 12px;
-}
-
-.js-ready .editor {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-}
-
-.js-ready .editor-chrome,
-.js-ready .breadcrumbs,
-.js-ready .slide-controls {
-  flex-shrink: 0;
-}
-
-.js-ready .editor-chrome {
-  height: 42px;
-}
-
-.js-ready .breadcrumbs {
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-
-.js-ready .slide-viewport {
-  flex: 1;
-  min-height: 0;
-}
-
-.js-ready .slides {
-  height: 100%;
-}
-
-.js-ready .slide {
-  height: 100%;
-  overflow-y: auto;
-  padding-top: clamp(8px, 2vh, 20px);
-  padding-bottom: 12px;
-  font-size: clamp(12px, 1.8vh, 15px);
-  line-height: 1.45;
-}
-
-.js-ready .code-line {
-  min-height: 22px;
-}
-
-.js-ready .code-line::before {
-  line-height: 22px;
-}
-
-.js-ready h1,
-.js-ready h2 {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  font-size: clamp(24px, 5vh, 48px);
-  line-height: 1.2;
-}
-
-.js-ready .intro,
-.js-ready .description {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  font-size: clamp(13px, 2vh, 16px);
-  line-height: 1.5;
-}
-
-.js-ready .features li {
-  padding-top: 1px;
-  padding-bottom: 1px;
-}
-
-.js-ready .contact-kicker {
-  padding-top: 8px;
-}
-
-.js-ready .slide-controls {
-  min-height: 58px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-
-.js-ready .statusbar {
-  flex-shrink: 0;
-  width: 100%;
-  padding-top: 4px;
-  padding-bottom: 12px;
-  align-items: center;
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 8px 20px;
-}
-
-.footer-links a:hover {
-  color: var(--accent);
-}
-
-@media (max-width: 700px) {
-  .js-ready .topbar {
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-
-  .js-ready .slide {
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-
-  .js-ready .statusbar {
-    padding-bottom: 8px;
-  }
-}
-    /* Бутон за смяна на темата */
-.theme-toggle {
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--chrome);
-  color: var(--text);
-  font: inherit;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.theme-toggle:hover {
-  border-color: var(--accent);
-}
-
-.theme-toggle:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
-}
-
-/* Светла версия */
-body.light-theme {
-  color-scheme: light;
-  --background: #f0f3f8;
-  --editor: #ffffff;
-  --chrome: #e4eaf3;
-  --border: #bdc9d8;
-  --text: #202b3b;
-  --muted: #4b5c72;
-  --comment: #426e4b;
-  --tag: #005da8;
-  --attribute: #773c98;
-  --string: #925018;
-  --accent: #286c48;
-}
-
-body.light-theme .slide-controls {
-  background: #eaf0f7;
-}
-
-body.light-theme .code-line::before {
-  color: #64758a;
-}
-
-body.light-theme .arrow {
-  border-color: #7d8fa3;
-}
-
-body.light-theme .contact-link:hover {
-  color: #174830;
-}
-
-body.light-theme ::selection {
-  color: #142337;
-  background: #b7d4ee;
-}
-
-@media (max-width: 700px) {
-  .topbar {
-    flex-wrap: wrap;
-    gap: 8px 12px;
-  }
-
-  .theme-toggle {
-    font-size: 11px;
-    padding: 6px 8px;
-  }
-}
   </style>
 </head>
-
 <body>
   <a class="skip-link" href="#presentation">Към съдържанието</a>
-
   <header class="topbar">
-    <a class="brand" href="#presentation">
-      <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
-      Nexora<span class="brand-extension">.dev</span>
-    </a>
-
-    <a class="header-contact" href="mailto:dimitragilova@gmail.com">
-      Свържи се <span aria-hidden="true">↗</span>
-    </a>
-    <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">
-  ☀
-    </button>
+    <a class="brand" href="#presentation"><span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>Nexora<span class="brand-extension">.dev</span></a>
+    <div class="top-actions">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Смени цветната тема">☀ Светла версия</button>
+      <a class="header-contact" href="mailto:hello@nexora.dev">Свържи се <span aria-hidden="true">↗</span></a>
+    </div>
   </header>
 
-  <main id="presentation" class="editor" tabindex="-1">
+  <main class="editor" id="presentation" tabindex="-1">
     <div class="editor-chrome">
-      <div class="window-dots" aria-hidden="true">
-        <span></span><span></span><span></span>
-      </div>
-      <div class="file-tab">
-        <span aria-hidden="true">&lt;&gt;</span> index.html
-      </div>
+      <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="file-tab"><span aria-hidden="true">&lt;&gt;</span> index.html</div>
       <span class="editor-label">NEXORA / WEB SOLUTIONS</span>
     </div>
-
-    <div class="breadcrumbs" aria-hidden="true">
-      nexora <span>›</span> index.html <span>›</span>
-      <span class="crumb-active">body</span>
-    </div>
+    <div class="breadcrumbs" aria-hidden="true">nexora <span>›</span> index.html <span>›</span> body</div>
 
     <div class="slide-viewport" aria-label="Уеб услуги на Nexora">
       <div class="slides">
         <section class="slide" aria-labelledby="intro-title">
-          <div class="code-line" aria-hidden="true">
-            <span class="tag">&lt;!doctype</span> html<span class="tag">&gt;</span>
-          </div>
-          <div class="code-line" aria-hidden="true">
-            <span class="tag">&lt;html</span>
-            <span class="attribute">lang</span>=<span class="string">"bg"</span><span class="tag">&gt;</span>
-          </div>
-          <div class="code-line indent" aria-hidden="true">
-            <span class="tag">&lt;body&gt;</span>
-          </div>
-          <div class="code-line indent-two comment">
-            &lt;!-- Уеб разработка по поръчка --&gt;
-          </div>
-          <div class="code-line indent-two" aria-hidden="true">
-            <span class="tag">&lt;h1&gt;</span>
-          </div>
-          <h1 class="code-line indent-three" id="intro-title">
-            Създавам дигитални решения, които <em>работят за вас.</em>
-          </h1>
-          <div class="code-line indent-two" aria-hidden="true">
-            <span class="tag">&lt;/h1&gt;</span>
-          </div>
-          <p class="code-line indent-two intro">
-            От идеи до готов продукт — бързо, ясно и с внимание към детайлите.
-          </p>
-          <p class="code-line indent-two comment">
-            Стратегия. Дизайн. Разработка.
-          </p>
-          <div class="code-line indent" aria-hidden="true">
-            <span class="tag">&lt;/body&gt;</span>
-          </div>
-          <div class="code-line" aria-hidden="true">
-            <span class="tag">&lt;/html&gt;</span>
-          </div>
+          <div class="code-line"><span class="tag">&lt;!doctype</span> html<span class="tag">&gt;</span></div>
+          <div class="code-line"><span class="tag">&lt;html</span> <span class="attribute">lang</span>=<span class="string">"bg"</span><span class="tag">&gt;</span></div>
+          <div class="code-line indent"><span class="tag">&lt;body&gt;</span></div>
+          <div class="code-line indent-two comment">&lt;!-- Уеб разработка по поръчка --&gt;</div>
+          <div class="code-line indent-two"><span class="tag">&lt;h1&gt;</span></div>
+          <h1 class="code-line indent-three" id="intro-title">Създавам дигитални решения, които <em>работят за вас.</em></h1>
+          <div class="code-line indent-two"><span class="tag">&lt;/h1&gt;</span></div>
+          <p class="code-line indent-two intro">От идеи до готов продукт — бързо, ясно и с внимание към детайлите.</p>
+          <p class="code-line indent-two comment">Стратегия. Дизайн. Разработка.</p>
+          <div class="code-line indent"><span class="tag">&lt;/body&gt;</span></div>
+          <div class="code-line"><span class="tag">&lt;/html&gt;</span></div>
         </section>
 
         <section class="slide" aria-labelledby="booking-title">
           <div class="code-line comment">&lt;!-- Услуга 01 / 04 --&gt;</div>
-          <div class="code-line" aria-hidden="true">
-            <span class="tag">&lt;article</span>
-            <span class="attribute">class</span>=<span class="string">"service booking"</span><span class="tag">&gt;</span>
-          </div>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;h2&gt;</span></div>
-          <h2 class="code-line indent-two" id="booking-title">Booking системи<span class="accent">.</span></h2>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;/h2&gt;</span></div>
-          <p class="code-line indent description">
-            Удобни системи за онлайн резервации за салони, студиа,
-            консултации и други услуги. Клиентите избират свободен час
-            и получават потвърждение и уведомление.
-          </p>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;ul&gt;</span></div>
-          <ul class="features indent-two">
-            <li class="code-line">Календар със свободни часове</li>
-            <li class="code-line">Управление на записи и услуги</li>
-            <li class="code-line">Имейл и SMS уведомления</li>
-          </ul>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;/ul&gt;</span></div>
-          <div class="code-line" aria-hidden="true"><span class="tag">&lt;/article&gt;</span></div>
+          <div class="code-line"><span class="tag">&lt;article</span> <span class="attribute">class</span>=<span class="string">"booking"</span><span class="tag">&gt;</span></div>
+          <div class="code-line indent"><span class="tag">&lt;h2&gt;</span></div>
+          <h2 class="code-line indent-two" id="booking-title"><a class="preview-link" href="images_booking.jfif" data-images="images_booking.jfif" data-caption="Booking системи">Booking системи<span class="accent">.</span></a></h2>
+          <div class="code-line indent"><span class="tag">&lt;/h2&gt;</span></div>
+          <p class="code-line indent description">Удобни онлайн резервации за салони, студиа, консултации и други услуги. Клиентите избират свободен час и получават потвърждение.</p>
+          <div class="code-line indent"><span class="tag">&lt;ul&gt;</span></div>
+          <ul class="features indent-two"><li class="code-line">Календар със свободни часове</li><li class="code-line">Управление на записи и услуги</li><li class="code-line">Имейл и SMS уведомления</li></ul>
+          <div class="code-line indent"><span class="tag">&lt;/ul&gt;</span></div>
+          <div class="code-line"><span class="tag">&lt;/article&gt;</span></div>
         </section>
 
         <section class="slide" aria-labelledby="shop-title">
           <div class="code-line comment">&lt;!-- Услуга 02 / 04 --&gt;</div>
-          <div class="code-line" aria-hidden="true">
-            <span class="tag">&lt;article</span>
-            <span class="attribute">class</span>=<span class="string">"service e-commerce"</span><span class="tag">&gt;</span>
-          </div>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;h2&gt;</span></div>
-          <h2 class="code-line indent-two" id="shop-title">Онлайн магазини<span class="accent">.</span></h2>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;/h2&gt;</span></div>
-          <p class="code-line indent description">
-            Модерни и бързи електронни магазини с лесно управление на
-            продукти, поръчки и доставки, съобразени с вашия асортимент
-            и начин на продажба.
-          </p>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;ul&gt;</span></div>
-          <ul class="features indent-two">
-            <li class="code-line">Каталог и филтриране</li>
-            <li class="code-line">Количка и плавно плащане</li>
-            <li class="code-line">Административен панел</li>
-          </ul>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;/ul&gt;</span></div>
-          <div class="code-line" aria-hidden="true"><span class="tag">&lt;/article&gt;</span></div>
+          <div class="code-line"><span class="tag">&lt;article</span> <span class="attribute">class</span>=<span class="string">"online-store"</span><span class="tag">&gt;</span></div>
+          <div class="code-line indent"><span class="tag">&lt;h2&gt;</span></div>
+          <h2 class="code-line indent-two" id="shop-title"><a class="preview-link" href="images_online-store.jfif" data-images="images_online-store.jfif" data-caption="Онлайн магазин">Онлайн магазини<span class="accent">.</span></a></h2>
+          <div class="code-line indent"><span class="tag">&lt;/h2&gt;</span></div>
+          <p class="code-line indent description">Модерни и бързи електронни магазини с управление на продукти, поръчки и доставки, съобразени с вашия асортимент.</p>
+          <div class="code-line indent"><span class="tag">&lt;ul&gt;</span></div>
+          <ul class="features indent-two"><li class="code-line">Каталог и филтриране</li><li class="code-line">Количка и плавно плащане</li><li class="code-line">Административен панел</li></ul>
+          <div class="code-line indent"><span class="tag">&lt;/ul&gt;</span></div>
+          <div class="code-line"><span class="tag">&lt;/article&gt;</span></div>
         </section>
 
         <section class="slide" aria-labelledby="landing-title">
           <div class="code-line comment">&lt;!-- Услуга 03 / 04 --&gt;</div>
-          <div class="code-line" aria-hidden="true">
-            <span class="tag">&lt;article</span>
-            <span class="attribute">class</span>=<span class="string">"service landing-page"</span><span class="tag">&gt;</span>
-          </div>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;h2&gt;</span></div>
-          <h2 class="code-line indent-two" id="landing-title">Landing pages<span class="accent">.</span></h2>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;/h2&gt;</span></div>
-          <p class="code-line indent description">
-            Бързи и убедителни едностранични сайтове за продукт, услуга,
-            кампания или събитие, с ясно послание и действие за посетителя.
-          </p>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;ul&gt;</span></div>
-          <ul class="features indent-two">
-            <li class="code-line">Ясна визуална структура</li>
-            <li class="code-line">Адаптивен мобилен дизайн</li>
-            <li class="code-line">Форми и интеграции</li>
-          </ul>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;/ul&gt;</span></div>
-          <div class="code-line" aria-hidden="true"><span class="tag">&lt;/article&gt;</span></div>
+          <div class="code-line"><span class="tag">&lt;article</span> <span class="attribute">class</span>=<span class="string">"landing-page"</span><span class="tag">&gt;</span></div>
+          <div class="code-line indent"><span class="tag">&lt;h2&gt;</span></div>
+          <h2 class="code-line indent-two" id="landing-title"><a class="preview-link" href="images_landing-page.jpg" data-images="images_landing-page.jpg" data-caption="Landing page">Landing pages<span class="accent">.</span></a></h2>
+          <div class="code-line indent"><span class="tag">&lt;/h2&gt;</span></div>
+          <p class="code-line indent description">Бързи и убедителни едностранични сайтове за продукт, услуга, кампания или събитие, с ясно послание и действие.</p>
+          <div class="code-line indent"><span class="tag">&lt;ul&gt;</span></div>
+          <ul class="features indent-two"><li class="code-line">Ясна визуална структура</li><li class="code-line">Адаптивен мобилен дизайн</li><li class="code-line">Форми и интеграции</li></ul>
+          <div class="code-line indent"><span class="tag">&lt;/ul&gt;</span></div>
+          <div class="code-line"><span class="tag">&lt;/article&gt;</span></div>
         </section>
 
         <section class="slide" aria-labelledby="app-title">
           <div class="code-line comment">&lt;!-- Услуга 04 / 04 --&gt;</div>
-          <div class="code-line" aria-hidden="true">
-            <span class="tag">&lt;article</span>
-            <span class="attribute">class</span>=<span class="string">"service web-app"</span><span class="tag">&gt;</span>
-          </div>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;h2&gt;</span></div>
-          <h2 class="code-line indent-two" id="app-title">
-            Персонализирани уеб приложения<span class="accent">.</span>
-          </h2>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;/h2&gt;</span></div>
-          <p class="code-line indent description">
-            За идеи и процеси, които стандартните решения не покриват:
-            персонализирано приложение от първата схема до готовата платформа.
-          </p>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;ul&gt;</span></div>
-          <ul class="features indent-two">
-            <li class="code-line">Анализ на процесите</li>
-            <li class="code-line">Дизайн на интерфейса</li>
-            <li class="code-line">Разработка и поддръжка</li>
-          </ul>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;/ul&gt;</span></div>
-          <div class="code-line" aria-hidden="true"><span class="tag">&lt;/article&gt;</span></div>
+          <div class="code-line"><span class="tag">&lt;article</span> <span class="attribute">class</span>=<span class="string">"web-app"</span><span class="tag">&gt;</span></div>
+          <div class="code-line indent"><span class="tag">&lt;h2&gt;</span></div>
+          <h2 class="code-line indent-two" id="app-title"><a class="preview-link" href="images_web-app.jpeg" data-images="images_web-app.jpeg" data-caption="Уеб приложение">Персонализирани уеб приложения<span class="accent">.</span></a></h2>
+          <div class="code-line indent"><span class="tag">&lt;/h2&gt;</span></div>
+          <p class="code-line indent description">Персонализирани приложения за идеи и процеси, които стандартните решения не покриват — от схема до готова платформа.</p>
+          <div class="code-line indent"><span class="tag">&lt;ul&gt;</span></div>
+          <ul class="features indent-two"><li class="code-line">Анализ на процесите</li><li class="code-line">Дизайн на интерфейса</li><li class="code-line">Разработка и поддръжка</li></ul>
+          <div class="code-line indent"><span class="tag">&lt;/ul&gt;</span></div>
+          <div class="code-line"><span class="tag">&lt;/article&gt;</span></div>
         </section>
 
         <section class="slide" aria-labelledby="contact-title">
-          <div class="code-line comment">
-            &lt;!-- Всеки добър проект започва с разговор. --&gt;
-          </div>
-          <div class="code-line" aria-hidden="true">
-            <span class="tag">&lt;footer</span>
-            <span class="attribute">id</span>=<span class="string">"contact"</span><span class="tag">&gt;</span>
-          </div>
+          <div class="code-line comment">&lt;!-- Всеки добър проект започва с разговор. --&gt;</div>
+          <div class="code-line"><span class="tag">&lt;footer</span> <span class="attribute">id</span>=<span class="string">"contact"</span><span class="tag">&gt;</span></div>
           <p class="code-line indent contact-kicker">Имате идея?</p>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;h2&gt;</span></div>
-          <h2 class="code-line indent-two contact-title" id="contact-title">
-            Да я превърнем<br>в реалност<span class="accent">.</span>
-          </h2>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;/h2&gt;</span></div>
-          <div class="code-line indent" aria-hidden="true">
-            <span class="tag">&lt;a</span>
-            <span class="attribute">href</span>=<span class="string">"mailto:hello@nexora.dev"</span><span class="tag">&gt;</span>
-          </div>
-          <p class="code-line indent-two">
-            <a class="contact-link" href="mailto:hello@nexora.dev">
-              Разкажете ми за проекта <span aria-hidden="true">↗</span>
-            </a>
-          </p>
-          <div class="code-line indent" aria-hidden="true"><span class="tag">&lt;/a&gt;</span></div>
-          <div class="code-line" aria-hidden="true"><span class="tag">&lt;/footer&gt;</span></div>
+          <div class="code-line indent"><span class="tag">&lt;h2&gt;</span></div>
+          <h2 class="code-line indent-two" id="contact-title">Да я превърнем<br>в реалност<span class="accent">.</span></h2>
+          <div class="code-line indent"><span class="tag">&lt;/h2&gt;</span></div>
+          <div class="code-line indent"><span class="tag">&lt;a</span> <span class="attribute">href</span>=<span class="string">"mailto:hello@nexora.dev"</span><span class="tag">&gt;</span></div>
+          <p class="code-line indent-two"><a class="contact-link" href="mailto:hello@nexora.dev">Разкажете ми за проекта <span aria-hidden="true">↗</span></a></p>
+          <div class="code-line indent"><span class="tag">&lt;/a&gt;</span></div>
+          <div class="code-line"><span class="tag">&lt;/footer&gt;</span></div>
         </section>
       </div>
     </div>
 
     <nav class="slide-controls" aria-label="Навигация на презентацията" hidden>
-      <div class="slide-progress">
-        <span class="progress-label">СЛАЙД</span>
-        <span id="slide-count">01 / 06</span>
-        <span id="slide-announcement" class="sr-only" aria-live="polite" aria-atomic="true"></span>
-      </div>
-
-      <p class="keyboard-hint">Използвайте стрелките на клавиатурата</p>
-
+      <div class="slide-progress"><span class="progress-label">СЛАЙД</span><span id="slide-count">01 / 06</span><span id="slide-announcement" class="sr-only" aria-live="polite"></span></div>
+      <p class="keyboard-hint">Стрелки на клавиатурата или колелце</p>
       <div class="arrows">
-  <button type="button" class="arrow" id="previous" aria-label="Предишен слайд">←</button>
-  <button type="button" class="arrow" id="next" aria-label="Следващ слайд">→</button>
-</div>
+        <button class="arrow" id="previous" type="button" aria-label="Предишен слайд">←</button>
+        <button class="arrow" id="next" type="button" aria-label="Следващ слайд">→</button>
+      </div>
     </nav>
   </main>
 
   <footer class="statusbar">
-  <span><span class="status-dot" aria-hidden="true"></span> Nexora / Уеб решения</span>
+    <span><span class="status-dot" aria-hidden="true"></span>Nexora / Уеб решения</span>
+    <nav class="footer-links" aria-label="Бързи връзки">
+      <a href="#presentation" data-slide="0">Начало</a>
+      <a href="#presentation" data-slide="1">Услуги</a>
+      <a href="#presentation" data-slide="5">Контакт</a>
+      <a href="mailto:hello@nexora.dev">Имейл</a>
+    </nav>
+  </footer>
 
-  <nav class="footer-links" aria-label="Допълнителни връзки">
-    <a href="#presentation" onclick="showSlide(0)">Начало</a>
-    <a href="#presentation" onclick="showSlide(1)">Услуги</a>
-    <a href="mailto:hello@nexora.dev">Имейл</a>
-  </nav>
-</footer>
+  <dialog class="preview-dialog" id="preview-dialog" aria-labelledby="preview-title">
+    <div class="preview-toolbar">
+      <h2 class="preview-title" id="preview-title"></h2>
+      <button class="preview-button" id="preview-close" type="button" aria-label="Затвори прегледа">Затвори ✕</button>
+    </div>
+    <figure>
+      <img id="preview-image" alt="">
+      <figcaption id="preview-caption"></figcaption>
+    </figure>
+    <div class="preview-navigation" aria-label="Снимки на проекта">
+      <button class="preview-button" id="preview-previous" type="button" aria-label="Предишна снимка">←</button>
+      <span class="preview-count" id="preview-count" aria-live="polite"></span>
+      <button class="preview-button" id="preview-next" type="button" aria-label="Следваща снимка">→</button>
+    </div>
+    <a class="preview-demo" id="preview-demo" target="_blank" rel="noopener" hidden>Отвори проекта ↗</a>
+  </dialog>
 
   <script>
-  const viewport = document.querySelector('.slide-viewport');
-  const track = viewport.querySelector('.slides');
-  const slides = Array.from(track.querySelectorAll('.slide'));
-  const controls = document.querySelector('.slide-controls');
-  const previous = document.querySelector('#previous');
-  const next = document.querySelector('#next');
-  const count = document.querySelector('#slide-count');
-  const announcement = document.querySelector('#slide-announcement');
-  let currentSlide = 0;
-  let lastScrollTime = 0;
+    const viewport = document.querySelector('.slide-viewport');
+    const track = document.querySelector('.slides');
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const controls = document.querySelector('.slide-controls');
+    const previous = document.querySelector('#previous');
+    const next = document.querySelector('#next');
+    const slideCount = document.querySelector('#slide-count');
+    const announcement = document.querySelector('#slide-announcement');
+    let currentSlide = 0;
+    let wheelLocked = false;
 
-  function showSlide(index, announce = true) {
-    if (index < 0 || index >= slides.length) return;
-
-    if (slides[currentSlide].contains(document.activeElement)) {
-      viewport.focus();
+    function showSlide(index, announce = true) {
+      if (index < 0 || index >= slides.length) return;
+      currentSlide = index;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      slides.forEach((slide, i) => {
+        slide.inert = i !== index;
+        slide.setAttribute('aria-hidden', String(i !== index));
+      });
+      previous.setAttribute('aria-disabled', String(index === 0));
+      next.setAttribute('aria-disabled', String(index === slides.length - 1));
+      slideCount.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+      if (announce) {
+        const heading = slides[index].querySelector('h1, h2');
+        announcement.textContent = `Слайд ${index + 1} от ${slides.length}: ${heading.textContent.trim()}`;
+      }
     }
 
-    currentSlide = index;
-    track.style.transform = `translateX(-${index * 100}%)`;
+    previous.addEventListener('click', () => showSlide(currentSlide - 1));
+    next.addEventListener('click', () => showSlide(currentSlide + 1));
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest('[data-slide]');
+      if (!link) return;
+      event.preventDefault();
+      showSlide(Number(link.dataset.slide));
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      if (document.querySelector('#preview-dialog').open) return;
+      if (event.target.closest('input, textarea, select, [contenteditable], button, a')) return;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        showSlide(currentSlide + (event.key === 'ArrowRight' ? 1 : -1));
+      }
+    });
+    viewport.addEventListener('wheel', (event) => {
+      if (event.ctrlKey || Math.abs(event.deltaX) + Math.abs(event.deltaY) < 8) return;
+      event.preventDefault();
+      if (wheelLocked) return;
+      wheelLocked = true;
+      const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+      showSlide(currentSlide + (delta > 0 ? 1 : -1));
+      window.setTimeout(() => { wheelLocked = false; }, 550);
+    }, { passive: false });
 
-    slides.forEach((slide, i) => {
-      const active = i === index;
-      slide.inert = !active;
-      slide.setAttribute('aria-hidden', String(!active));
+    let touchX = 0;
+    let touchY = 0;
+    viewport.addEventListener('touchstart', (event) => {
+      touchX = event.changedTouches[0].clientX;
+      touchY = event.changedTouches[0].clientY;
+    }, { passive: true });
+    viewport.addEventListener('touchend', (event) => {
+      const dx = event.changedTouches[0].clientX - touchX;
+      const dy = event.changedTouches[0].clientY - touchY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+        showSlide(currentSlide + (dx < 0 ? 1 : -1));
+      }
+    }, { passive: true });
+    showSlide(0, false);
+    controls.hidden = false;
+
+    const themeButton = document.querySelector('#theme-toggle');
+    let savedTheme = null;
+    try { savedTheme = localStorage.getItem('nexora-theme'); } catch (error) { console.warn('Темата няма да се запомни.', error); }
+    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    function applyTheme(light) {
+      document.body.classList.toggle('light-theme', light);
+      themeButton.setAttribute('aria-pressed', String(light));
+      themeButton.textContent = light ? '☾ Нощна версия' : '☀ Светла версия';
+    }
+    applyTheme(savedTheme ? savedTheme === 'light' : prefersLight);
+    themeButton.addEventListener('click', () => {
+      const light = !document.body.classList.contains('light-theme');
+      applyTheme(light);
+      try { localStorage.setItem('nexora-theme', light ? 'light' : 'dark'); } catch (error) { console.warn('Темата няма да се запомни.', error); }
     });
 
-    previous.setAttribute('aria-disabled', String(index === 0));
-    next.setAttribute('aria-disabled', String(index === slides.length - 1));
-    count.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    const dialog = document.querySelector('#preview-dialog');
+    const previewImage = document.querySelector('#preview-image');
+    const previewTitle = document.querySelector('#preview-title');
+    const previewCaption = document.querySelector('#preview-caption');
+    const previewCount = document.querySelector('#preview-count');
+    const previewDemo = document.querySelector('#preview-demo');
+    let gallery = [];
+    let galleryIndex = 0;
 
-    if (announce) {
-      const title = slides[index].querySelector('h1, h2').textContent.trim();
-      announcement.textContent = `Слайд ${index + 1} от ${slides.length}: ${title}`;
+    function showPreview(index) {
+      if (!gallery.length) return;
+      galleryIndex = (index + gallery.length) % gallery.length;
+      previewImage.src = gallery[galleryIndex];
+      previewImage.alt = `${previewTitle.textContent}, снимка ${galleryIndex + 1}`;
+      previewCount.textContent = `${galleryIndex + 1} / ${gallery.length}`;
+      document.querySelector('#preview-previous').disabled = gallery.length < 2;
+      document.querySelector('#preview-next').disabled = gallery.length < 2;
     }
-  }
 
-  previous.addEventListener('click', () => showSlide(currentSlide - 1));
-  next.addEventListener('click', () => showSlide(currentSlide + 1));
-
-  document.addEventListener('keydown', (event) => {
-    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-    if (event.target.closest('input, textarea, select, [contenteditable]')) return;
-
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-      event.preventDefault();
-      showSlide(currentSlide + (event.key === 'ArrowRight' ? 1 : -1));
-    }
-  });
-
-  viewport.addEventListener('wheel', (event) => {
-    if (event.ctrlKey) return;
-
-    const horizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY);
-    const delta = horizontal ? event.deltaX : event.deltaY;
-    if (delta === 0) return;
-
-    const slide = slides[currentSlide];
-    const canScrollDown = slide.scrollTop + slide.clientHeight < slide.scrollHeight - 1;
-    const canScrollUp = slide.scrollTop > 0;
-
-    // При непобиращ се текст първо позволяваме скрол в слайда.
-    if (!horizontal && ((delta > 0 && canScrollDown) || (delta < 0 && canScrollUp))) return;
-
-    event.preventDefault();
-    const now = Date.now();
-    if (now - lastScrollTime < 700) return;
-    lastScrollTime = now;
-    showSlide(currentSlide + (delta > 0 ? 1 : -1));
-  }, { passive: false });
-
-  let touchStartX = 0;
-  let touchStartY = 0;
-
-  viewport.addEventListener('touchstart', (event) => {
-    touchStartX = event.changedTouches[0].clientX;
-    touchStartY = event.changedTouches[0].clientY;
-  }, { passive: true });
-
-  viewport.addEventListener('touchend', (event) => {
-    const dx = event.changedTouches[0].clientX - touchStartX;
-    const dy = event.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-      showSlide(currentSlide + (dx < 0 ? 1 : -1));
-    }
-  }, { passive: true });
-
-  viewport.tabIndex = -1;
-  showSlide(0, false);
-  document.body.classList.add('js-ready');
-  controls.hidden = false;
-  // Светла и нощна версия
-(function () {
-  const button = document.querySelector('#theme-toggle');
-  const storageKey = 'nexora-theme';
-  let savedTheme = null;
-
-  try {
-    savedTheme = localStorage.getItem(storageKey);
-  } catch (error) {
-    console.warn('Темата няма да се запомни в този браузър.', error);
-  }
-
-  const systemPrefersLight = window.matchMedia &&
-    window.matchMedia('(prefers-color-scheme: light)').matches;
-
-  function applyTheme(light) {
-    document.body.classList.toggle('light-theme', light);
-    button.setAttribute('aria-pressed', String(light));
-    button.textContent = light ? '☾ Нощна версия' : '☀ Светла версия';
-  }
-
-  applyTheme(savedTheme === 'light' || (!savedTheme && systemPrefersLight));
-
-  button.addEventListener('click', () => {
-    const light = !document.body.classList.contains('light-theme');
-    applyTheme(light);
-
-    try {
-      localStorage.setItem(storageKey, light ? 'light' : 'dark');
-    } catch (error) {
-      console.warn('Темата няма да се запомни в този браузър.', error);
-    }
-  });
-})();
-</script>
+    document.querySelectorAll('.preview-link').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        gallery = (link.dataset.images || link.getAttribute('href')).split(',').map((path) => path.trim()).filter(Boolean);
+        previewTitle.textContent = link.dataset.caption || link.textContent.trim();
+        previewCaption.textContent = 'Примерен изглед на проекта';
+        showPreview(0);
+        const demo = link.dataset.demo;
+        previewDemo.hidden = !demo;
+        if (demo) previewDemo.href = demo;
+        dialog.showModal();
+      });
+    });
+    document.querySelector('#preview-previous').addEventListener('click', () => showPreview(galleryIndex - 1));
+    document.querySelector('#preview-next').addEventListener('click', () => showPreview(galleryIndex + 1));
+    document.querySelector('#preview-close').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        event.stopPropagation();
+        showPreview(galleryIndex + (event.key === 'ArrowRight' ? 1 : -1));
+      }
+    });
+    dialog.addEventListener('close', () => {
+      previewImage.removeAttribute('src');
+      previewDemo.hidden = true;
+      previewDemo.removeAttribute('href');
+    });
+  </script>
 </body>
 </html>
