@@ -852,16 +852,25 @@ body.js-ready {
   });
 
   viewport.addEventListener('wheel', (event) => {
-    if (event.ctrlKey) return;
-    const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY)
-      ? event.deltaX : event.deltaY;
-    if (delta === 0) return;
+  if (event.ctrlKey) return;
 
-    event.preventDefault();
-    const now = Date.now();
-    if (now - lastScrollTime < 700) return;
-    lastScrollTime = now;
-    showSlide(currentSlide + (delta > 0 ? 1 : -1));
+  const activeSlide = slides[currentSlide];
+  const isHorizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY);
+
+  // Ако текстът не се побира, вертикалният скрол остава в слайда.
+  if (!isHorizontal && activeSlide.scrollHeight > activeSlide.clientHeight + 1) {
+    return;
+  }
+
+  const delta = isHorizontal ? event.deltaX : event.deltaY;
+  if (delta === 0) return;
+
+  event.preventDefault();
+  const now = Date.now();
+  if (now - lastScrollTime < 700) return;
+  lastScrollTime = now;
+  showSlide(currentSlide + (delta > 0 ? 1 : -1));
+}, { passive: false });
   }, { passive: false });
 
   let touchStartX = 0;
