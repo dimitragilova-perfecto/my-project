@@ -238,7 +238,7 @@
   <header class="topbar">
     <a class="brand" href="#presentation"><span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>Nexora<span class="brand-extension">.dev</span></a>
     <div class="top-actions">
-      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Смени цветната тема">☀ Светла версия</button>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Смени цветната тема">☀</button>
       <a class="header-contact" href="mailto:hello@nexora.dev">Свържи се <span aria-hidden="true">↗</span></a>
     </div>
   </header>
@@ -450,7 +450,7 @@
     function applyTheme(light) {
       document.body.classList.toggle('light-theme', light);
       themeButton.setAttribute('aria-pressed', String(light));
-      themeButton.textContent = light ? '☾ Нощна версия' : '☀ Светла версия';
+      themeButton.textContent = light ? '☾' : '☀';
     }
     applyTheme(savedTheme ? savedTheme === 'light' : prefersLight);
     themeButton.addEventListener('click', () => {
