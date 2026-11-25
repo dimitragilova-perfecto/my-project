@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Демо — онлайн резервации</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #f3f7f2;
+      color: #23342b;
+      font: 16px/1.5 Arial, sans-serif;
+    }
+    header {
+      padding: 20px;
+      background: white;
+      border-bottom: 1px solid #dce8dd;
+      font-weight: bold;
+    }
+    main {
+      width: min(520px, calc(100% - 32px));
+      margin: 48px auto;
+    }
+    h1 { font-size: clamp(30px, 6vw, 46px); }
+    form {
+      padding: 24px;
+      background: white;
+      border: 1px solid #dce8dd;
+      border-radius: 12px;
+    }
+    label {
+      display: block;
+      margin: 16px 0 6px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #aebfb2;
+      border-radius: 6px;
+      font: inherit;
+      background: white;
+      color: #23342b;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 6px;
+      background: #315d49;
+      color: white;
+      font: inherit;
+      cursor: pointer;
+    }
+    :focus-visible { outline: 3px solid #d5ab45; outline-offset: 3px; }
+    .note { color: #536b5c; font-size: 13px; }
+    #result { color: #315d49; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>✳ Studio Bloom · Демо</header>
+  <main>
+    <h1>Запазете своя час</h1>
+    <p>Изберете услуга, дата и удобен час.</p>
+
+    <form id="booking">
+      <label for="service">Услуга</label>
+      <select id="service" required>
+        <option value="">Изберете услуга</option>
+        <option>Подстригване</option>
+        <option>Маникюр</option>
+        <option>Консултация</option>
+      </select>
+
+      <label for="date">Дата</label>
+      <input id="date" type="date" required>
+
+      <label for="time">Час</label>
+      <select id="time" required>
+        <option value="">Изберете час</option>
+        <option>10:00</option>
+        <option>11:30</option>
+        <option>14:00</option>
+        <option>16:00</option>
+      </select>
+
+      <label for="name">Вашето име</label>
+      <input id="name" required maxlength="80" autocomplete="name">
+
+      <button type="submit">Запази час</button>
+      <p id="result" role="status" aria-live="polite"></p>
+      <p class="note">Това е демо: не се правят реални резервации и не се изпращат данни.</p>
+    </form>
+  </main>
+
+  <script>
+    const form = document.querySelector('#booking');
+    const date = document.querySelector('#date');
+    const nameInput = document.querySelector('#name');
+    const today = new Date();
+    const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000);
+    date.min = localDate.toISOString().slice(0, 10);
+
+    nameInput.addEventListener('input', () => nameInput.setCustomValidity(''));
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const name = nameInput.value.trim();
+      if (!name) {
+        nameInput.setCustomValidity('Моля, въведете име.');
+        nameInput.reportValidity();
+        return;
+      }
+
+      const service = document.querySelector('#service').value;
+      const time = document.querySelector('#time').value;
+      document.querySelector('#result').textContent =
+        `Примерно потвърждение: ${name}, ${service}, ${date.value}, ${time} ч.`;
+    });
+  </script>
+</body>
+</html>
