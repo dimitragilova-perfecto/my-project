@@ -266,6 +266,28 @@
     margin: 0 0 18px;
   }
 }
+  .demo-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.demo-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.demo-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
   </style>
 </head>
 <body>
@@ -306,6 +328,7 @@
           <figure class="service-preview">
           <img src="images_booking.jfif" alt="Примерен изглед за booking система">
           <figcaption>Примерен проект</figcaption>
+          <button class="demo-button" type="button" disabled>Изпробвай демо</button>
           </figure>
           <div class="code-line comment">&lt;!-- Услуга 01 / 04 --&gt;</div>
           <div class="code-line"><span class="tag">&lt;article</span> <span class="attribute">class</span>=<span class="string">"booking"</span><span class="tag">&gt;</span></div>
@@ -323,6 +346,7 @@
           <figure class="service-preview">
           <img src="images_online-store.jfif" alt="Примерен изглед за онлайн магазин">
           <figcaption>Примерен проект</figcaption>
+          <button class="demo-button" type="button" disabled>Изпробвай демо</button>
           </figure>
           <div class="code-line comment">&lt;!-- Услуга 02 / 04 --&gt;</div>
           <div class="code-line"><span class="tag">&lt;article</span> <span class="attribute">class</span>=<span class="string">"online-store"</span><span class="tag">&gt;</span></div>
@@ -340,6 +364,7 @@
           <figure class="service-preview">
           <img src="images_landing-page.jpg" alt="Примерно изображение за landing page">
           <figcaption>Примерен проект</figcaption>
+          <button class="demo-button" type="button" disabled>Изпробвай демо</button>
           </figure>
           <div class="code-line comment">&lt;!-- Услуга 03 / 04 --&gt;</div>
           <div class="code-line"><span class="tag">&lt;article</span> <span class="attribute">class</span>=<span class="string">"landing-page"</span><span class="tag">&gt;</span></div>
@@ -357,6 +382,7 @@
           <figure class="service-preview">
           <img src="images_web-app.jpeg" alt="Примерно изображение за уеб приложение">
           <figcaption>Примерен проект</figcaption>
+          <button class="demo-button" type="button" disabled>Изпробвай демо</button>
           </figure>
           <div class="code-line comment">&lt;!-- Услуга 04 / 04 --&gt;</div>
           <div class="code-line"><span class="tag">&lt;article</span> <span class="attribute">class</span>=<span class="string">"web-app"</span><span class="tag">&gt;</span></div>
