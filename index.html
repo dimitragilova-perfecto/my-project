@@ -576,6 +576,75 @@ body.js-ready {
     padding-bottom: 8px;
   }
 }
+    /* Бутон за смяна на темата */
+.theme-toggle {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--chrome);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Светла версия */
+body.light-theme {
+  color-scheme: light;
+  --background: #f0f3f8;
+  --editor: #ffffff;
+  --chrome: #e4eaf3;
+  --border: #bdc9d8;
+  --text: #202b3b;
+  --muted: #4b5c72;
+  --comment: #426e4b;
+  --tag: #005da8;
+  --attribute: #773c98;
+  --string: #925018;
+  --accent: #286c48;
+}
+
+body.light-theme .slide-controls {
+  background: #eaf0f7;
+}
+
+body.light-theme .code-line::before {
+  color: #64758a;
+}
+
+body.light-theme .arrow {
+  border-color: #7d8fa3;
+}
+
+body.light-theme .contact-link:hover {
+  color: #174830;
+}
+
+body.light-theme ::selection {
+  color: #142337;
+  background: #b7d4ee;
+}
+
+@media (max-width: 700px) {
+  .topbar {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+
+  .theme-toggle {
+    font-size: 11px;
+    padding: 6px 8px;
+  }
+}
   </style>
 </head>
 
@@ -591,6 +660,9 @@ body.js-ready {
     <a class="header-contact" href="mailto:hello@nexora.dev">
       Свържи се <span aria-hidden="true">↗</span>
     </a>
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">
+  ☀ Светла версия
+    </button>
   </header>
 
   <main id="presentation" class="editor" tabindex="-1">
@@ -891,6 +963,40 @@ body.js-ready {
   showSlide(0, false);
   document.body.classList.add('js-ready');
   controls.hidden = false;
+  // Светла и нощна версия
+(function () {
+  const button = document.querySelector('#theme-toggle');
+  const storageKey = 'nexora-theme';
+  let savedTheme = null;
+
+  try {
+    savedTheme = localStorage.getItem(storageKey);
+  } catch (error) {
+    console.warn('Темата няма да се запомни в този браузър.', error);
+  }
+
+  const systemPrefersLight = window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: light)').matches;
+
+  function applyTheme(light) {
+    document.body.classList.toggle('light-theme', light);
+    button.setAttribute('aria-pressed', String(light));
+    button.textContent = light ? '☾ Нощна версия' : '☀ Светла версия';
+  }
+
+  applyTheme(savedTheme === 'light' || (!savedTheme && systemPrefersLight));
+
+  button.addEventListener('click', () => {
+    const light = !document.body.classList.contains('light-theme');
+    applyTheme(light);
+
+    try {
+      localStorage.setItem(storageKey, light ? 'light' : 'dark');
+    } catch (error) {
+      console.warn('Темата няма да се запомни в този браузър.', error);
+    }
+  });
+})();
 </script>
 </body>
 </html>
