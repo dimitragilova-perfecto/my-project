@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Демо — уеб приложение</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f3f7f2; color: #23342b; font: 16px/1.5 Arial, sans-serif; }
+    header { padding: 20px; background: white; font-weight: bold; }
+    main { width: min(600px, calc(100% - 32px)); margin: 48px auto; }
+    section { padding: 24px; background: white; border-radius: 12px; }
+    label { display: block; margin-bottom: 8px; }
+    input[type="text"] { width: 100%; padding: 11px; border: 1px solid #aebfb2; border-radius: 6px; font: inherit; }
+    button { margin-top: 12px; padding: 10px 16px; border: 0; border-radius: 6px; background: #315d49; color: white; cursor: pointer; }
+    :focus-visible { outline: 3px solid #d5ab45; outline-offset: 3px; }
+    ul { padding: 0; list-style: none; }
+    li { padding: 8px 0; border-bottom: 1px solid #e0e9df; overflow-wrap: anywhere; }
+    .note { color: #536b5c; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header>✓ Flow Tasks · Демо приложение</header>
+  <main>
+    <h1>Вашите задачи, на едно място.</h1>
+    <section>
+      <form id="task-form">
+        <label for="task">Нова задача</label>
+        <input id="task" type="text" maxlength="100" required placeholder="Например: Планирай среща">
+        <button type="submit">Добави</button>
+      </form>
+      <ul id="tasks">
+        <li><label><input type="checkbox"> Подготви първата идея</label></li>
+        <li><label><input type="checkbox"> Прегледай проекта</label></li>
+      </ul>
+      <p id="result" role="status" aria-live="polite"></p>
+      <p class="note">Демонстрация: задачите са временни и се изчистват при презареждане.</p>
+    </section>
+  </main>
+  <script>
+    const input = document.querySelector('#task');
+    input.addEventListener('input', () => input.setCustomValidity(''));
+
+    document.querySelector('#task-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const text = input.value.trim();
+      if (!text) {
+        input.setCustomValidity('Моля, въведете задача.');
+        input.reportValidity();
+        return;
+      }
+
+      const item = document.createElement('li');
+      const label = document.createElement('label');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      label.append(checkbox, document.createTextNode(` ${text}`));
+      item.append(label);
+      document.querySelector('#tasks').append(item);
+      document.querySelector('#result').textContent = 'Задачата е добавена.';
+      input.value = '';
+      input.focus();
+    });
+  </script>
+</body>
+</html>
