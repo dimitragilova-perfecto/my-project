@@ -870,8 +870,6 @@ body.js-ready {
   if (now - lastScrollTime < 700) return;
   lastScrollTime = now;
   showSlide(currentSlide + (delta > 0 ? 1 : -1));
-}, { passive: false });
-  }, { passive: false });
 
   let touchStartX = 0;
   let touchStartY = 0;
