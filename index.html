@@ -1458,56 +1458,90 @@
   </footer>
 
   <script>
-    const presentation = document.querySelector(".slide-viewport");
-    const track = presentation.querySelector(".slides");
-    const slides = Array.from(track.querySelectorAll(".slide"));
-    const controls = document.querySelector(".slide-controls");
-    const previous = document.querySelector("#previous");
-    const next = document.querySelector("#next");
-    const count = document.querySelector("#slide-count");
-    const announcement = document.querySelector("#slide-announcement");
-    let currentSlide = 0;
+  const viewport = document.querySelector('.slide-viewport');
+  const track = viewport.querySelector('.slides');
+  const slides = Array.from(track.querySelectorAll('.slide'));
+  const controls = document.querySelector('.slide-controls');
+  const previous = document.querySelector('#previous');
+  const next = document.querySelector('#next');
+  const count = document.querySelector('#slide-count');
+  const announcement = document.querySelector('#slide-announcement');
+  let currentSlide = 0;
+  let lastScrollTime = 0;
 
-    function showSlide(index, announce = true) {
-      if (index < 0 || index >= slides.length) return;
+  function showSlide(index, announce = true) {
+    if (index < 0 || index >= slides.length) return;
 
-      currentSlide = index;
-      track.style.transform = `translateX(-${index * 100}%)`;
-
-      slides.forEach((slide, slideIndex) => {
-        const active = slideIndex === index;
-        slide.inert = !active;
-        slide.setAttribute("aria-hidden", String(!active));
-      });
-
-      previous.setAttribute("aria-disabled", String(index === 0));
-      next.setAttribute("aria-disabled", String(index === slides.length - 1));
-
-      count.textContent =
-        `${String(index + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
-
-      if (announce) {
-        const title = slides[index].querySelector("h1, h2").textContent.trim();
-        announcement.textContent = `Слайд ${index + 1} от ${slides.length}: ${title}`;
-      }
+    const oldSlide = slides[currentSlide];
+    if (oldSlide.contains(document.activeElement)) {
+      viewport.focus();
     }
 
-    previous.addEventListener("click", () => showSlide(currentSlide - 1));
-    next.addEventListener("click", () => showSlide(currentSlide + 1));
+    currentSlide = index;
+    track.style.transform = `translateX(-${index * 100}%)`;
 
-    document.addEventListener("keydown", (event) => {
-      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-      if (event.target.closest("input, textarea, select, [contenteditable]")) return;
-
-      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
-        event.preventDefault();
-        showSlide(currentSlide + (event.key === "ArrowRight" ? 1 : -1));
-      }
+    slides.forEach((slide, slideIndex) => {
+      const active = slideIndex === index;
+      slide.inert = !active;
+      slide.setAttribute('aria-hidden', String(!active));
     });
 
-    showSlide(0, false);
-    document.body.classList.add("js-ready");
-    controls.hidden = false;
-  </script>
+    previous.setAttribute('aria-disabled', String(index === 0));
+    next.setAttribute('aria-disabled', String(index === slides.length - 1));
+    count.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+
+    if (announce) {
+      const title = slides[index].querySelector('h1, h2').textContent.trim();
+      announcement.textContent = `Слайд ${index + 1} от ${slides.length}: ${title}`;
+    }
+  }
+
+  previous.addEventListener('click', () => showSlide(currentSlide - 1));
+  next.addEventListener('click', () => showSlide(currentSlide + 1));
+
+  document.addEventListener('keydown', (event) => {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.target.closest('input, textarea, select, [contenteditable]')) return;
+
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      showSlide(currentSlide + (event.key === 'ArrowRight' ? 1 : -1));
+    }
+  });
+
+  viewport.addEventListener('wheel', (event) => {
+    if (event.ctrlKey) return;
+    const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY)
+      ? event.deltaX : event.deltaY;
+    if (delta === 0) return;
+
+    event.preventDefault();
+    const now = Date.now();
+    if (now - lastScrollTime < 700) return;
+    lastScrollTime = now;
+    showSlide(currentSlide + (delta > 0 ? 1 : -1));
+  }, { passive: false });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  viewport.addEventListener('touchstart', (event) => {
+    touchStartX = event.changedTouches[0].clientX;
+    touchStartY = event.changedTouches[0].clientY;
+  }, { passive: true });
+
+  viewport.addEventListener('touchend', (event) => {
+    const dx = event.changedTouches[0].clientX - touchStartX;
+    const dy = event.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      showSlide(currentSlide + (dx < 0 ? 1 : -1));
+    }
+  }, { passive: true });
+
+  viewport.tabIndex = -1;
+  showSlide(0, false);
+  document.body.classList.add('js-ready');
+  controls.hidden = false;
+</script>
 </body>
 </html>
