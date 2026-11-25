@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#141821">
   <meta name="description" content="Booking системи, онлайн магазини, landing pages и персонализирани уеб приложения.">
-  <title>Nexora — уеб решения за вашия бизнес</title>
+  <title>XXX — уеб решения за вашия бизнес</title>
 
   <style>
     :root {
@@ -446,6 +446,136 @@
         transition: none;
       }
     }
+  /* Оформление по височината на екрана */
+body.js-ready {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.js-ready .topbar {
+  flex-shrink: 0;
+  width: 100%;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.js-ready .editor {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.js-ready .editor-chrome,
+.js-ready .breadcrumbs,
+.js-ready .slide-controls {
+  flex-shrink: 0;
+}
+
+.js-ready .editor-chrome {
+  height: 42px;
+}
+
+.js-ready .breadcrumbs {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.js-ready .slide-viewport {
+  flex: 1;
+  min-height: 0;
+}
+
+.js-ready .slides {
+  height: 100%;
+}
+
+.js-ready .slide {
+  height: 100%;
+  overflow-y: auto;
+  padding-top: clamp(8px, 2vh, 20px);
+  padding-bottom: 12px;
+  font-size: clamp(12px, 1.8vh, 15px);
+  line-height: 1.45;
+}
+
+.js-ready .code-line {
+  min-height: 22px;
+}
+
+.js-ready .code-line::before {
+  line-height: 22px;
+}
+
+.js-ready h1,
+.js-ready h2 {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-size: clamp(24px, 5vh, 48px);
+  line-height: 1.2;
+}
+
+.js-ready .intro,
+.js-ready .description {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: clamp(13px, 2vh, 16px);
+  line-height: 1.5;
+}
+
+.js-ready .features li {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.js-ready .contact-kicker {
+  padding-top: 8px;
+}
+
+.js-ready .slide-controls {
+  min-height: 58px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.js-ready .statusbar {
+  flex-shrink: 0;
+  width: 100%;
+  padding-top: 4px;
+  padding-bottom: 12px;
+  align-items: center;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px 20px;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 700px) {
+  .js-ready .topbar {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .js-ready .slide {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .js-ready .statusbar {
+    padding-bottom: 8px;
+  }
+}
   </style>
 </head>
 
@@ -660,9 +790,14 @@
   </main>
 
   <footer class="statusbar">
-    <span><span class="status-dot" aria-hidden="true"></span> Nexora / Уеб решения</span>
-    <span>UTF-8 · HTML</span>
-  </footer>
+  <span><span class="status-dot" aria-hidden="true"></span> Nexora / Уеб решения</span>
+
+  <nav class="footer-links" aria-label="Допълнителни връзки">
+    <a href="#presentation" onclick="showSlide(0)">Начало</a>
+    <a href="#presentation" onclick="showSlide(1)">Услуги</a>
+    <a href="mailto:hello@nexora.dev">Имейл</a>
+  </nav>
+</footer>
 
   <script>
   const viewport = document.querySelector('.slide-viewport');
