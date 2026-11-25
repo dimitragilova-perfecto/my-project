@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Демо — landing page</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f3f7f2; color: #23342b; font: 16px/1.5 Arial, sans-serif; }
+    header { padding: 20px; background: white; font-weight: bold; }
+    main { width: min(700px, calc(100% - 32px)); margin: 48px auto; }
+    h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.15; }
+    form { padding: 24px; background: white; border-radius: 12px; }
+    label { display: block; margin: 14px 0 6px; font-weight: bold; }
+    input { width: 100%; padding: 11px; border: 1px solid #aebfb2; border-radius: 6px; font: inherit; }
+    button { margin-top: 20px; padding: 12px 18px; border: 0; border-radius: 6px; background: #315d49; color: white; cursor: pointer; }
+    :focus-visible { outline: 3px solid #d5ab45; outline-offset: 3px; }
+    .note { color: #536b5c; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header>✦ Focus Day · Демо страница</header>
+  <main>
+    <h1>Създайте пространство за важните идеи.</h1>
+    <p>Един примерен ден за нова перспектива, практически идеи и вдъхновение.</p>
+    <form id="signup">
+      <h2>Запазете място</h2>
+      <label for="name">Име</label>
+      <input id="name" required maxlength="80" autocomplete="name">
+      <label for="email">Имейл</label>
+      <input id="email" type="email" required autocomplete="email">
+      <button type="submit">Изпрати</button>
+      <p id="result" role="status" aria-live="polite"></p>
+      <p class="note">Демонстрация: данните не се изпращат и не се записват.</p>
+    </form>
+  </main>
+  <script>
+    const nameInput = document.querySelector('#name');
+    nameInput.addEventListener('input', () => nameInput.setCustomValidity(''));
+
+    document.querySelector('#signup').addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!nameInput.value.trim()) {
+        nameInput.setCustomValidity('Моля, въведете име.');
+        nameInput.reportValidity();
+        return;
+      }
+      document.querySelector('#result').textContent =
+        'Примерно потвърждение: формата работи. Не е изпратено записване.';
+    });
+  </script>
+</body>
+</html>
